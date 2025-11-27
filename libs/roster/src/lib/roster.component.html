@@ -1,1 +1,10 @@
-<p>TODO</p>
+<div class="user-list">
+  <h2>Conduit Users</h2>
+  <ul>
+    <li *ngFor="let user of users">
+      <h3>{{ user.username }}</h3>
+      <p>Email: {{ user.email }}</p>
+      <p>Articles Written: {{ user.articleCount }}</p>
+    </li>
+  </ul>
+</div>
