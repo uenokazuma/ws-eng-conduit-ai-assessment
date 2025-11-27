@@ -17,6 +17,17 @@ export class UserService {
     return this.userRepository.findAll();
   }
 
+  async findAllWithArticleCount(): Promise<any[]> {
+    const users = await this.userRepository.findAll();
+    const userWithArticleCounts = await Promise.all(
+      users.map(async (user) => {
+        const articleCount = await this.em.count('Article', { author: user.id });
+        return { ...user, articleCount };
+      })
+    );
+    return userWithArticleCounts;
+  }
+
   async findOne(loginUserDto: LoginUserDto): Promise<User> {
     const findOneOptions = {
       email: loginUserDto.email,

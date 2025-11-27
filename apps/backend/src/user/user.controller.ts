@@ -18,6 +18,11 @@ export class UserController {
     return this.userService.findByEmail(email);
   }
 
+  @Get('users')
+  async findAllUsersWithArticleCount(): Promise<any[]> {
+    return this.userService.findAllWithArticleCount();
+  }
+
   @Put('user')
   async update(@User('id') userId: number, @Body('user') userData: UpdateUserDto) {
     return this.userService.update(userId, userData);
