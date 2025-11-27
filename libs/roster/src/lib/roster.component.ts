@@ -5,6 +5,8 @@ interface User {
   username: string;
   email: string;
   articleCount: number;
+  favoritesReceived: number;
+  firstArticleDate: string;
 }
 
 @Component({
@@ -26,7 +28,10 @@ export class RosterComponent implements OnInit {
 
   loadUsers() {
     this.http.get<User[]>('/api/users').subscribe((data) => {
-      this.users = data;
+      this.users = data.map(user => ({
+        ...user,
+        firstArticleDate: user.firstArticleDate || '-'
+      }));
     });
   }
 }
