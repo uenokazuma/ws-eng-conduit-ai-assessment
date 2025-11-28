@@ -22,9 +22,9 @@ export class UserService {
     const users = await this.userRepository.findAll();
     const userStats = await Promise.all(
       users.map(async (user) => {
-        const articles = await this.em.find(Article, { author: user.id }, { populate: ['favoritedBy'] });
+        const articles = await this.em.find(Article, { author: user.id }, { populate: ['favoritesCount'] });
         const articleCount = articles.length;
-        const favoritesCount = articles.reduce((sum, article) => sum + article.favoritedBy.length, 0);
+        const favoritesCount = articles.reduce((sum, article) => sum + article.favoritesCount, 0);
         const firstArticle = await this.em.findOne(Article, { author: user.id }, { orderBy: { createdAt: 'ASC' } });
         const firstArticleDate = firstArticle ? firstArticle.createdAt : null;
         return { 
