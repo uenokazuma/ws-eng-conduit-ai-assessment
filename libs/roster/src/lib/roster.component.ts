@@ -14,7 +14,7 @@ interface User {
   templateUrl: './roster.component.html',
   styleUrls: ['./roster.component.css'],
   providers: [],
-  imports: [],
+  imports: [CommonModule, RouterModule],
   standalone: true,
 })
 export class RosterComponent implements OnInit {

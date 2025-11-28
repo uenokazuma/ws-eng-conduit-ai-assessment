@@ -1,6 +1,6 @@
 <div class="roster-container">
   <h1>Conduit Roster</h1>
-  <table class="roster-table">
+  <table class="roster-table" *ngIf="users.length > 0">
     <thead>
       <tr>
         <th>Username</th>
@@ -9,7 +9,7 @@
         <th>First Article Date</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody *ngIf="users.length > 0; else noUsers">
       <tr *ngFor="let user of users">
         <td><a [routerLink]="['/profile', user.username]">{{ user.username }}</a></td>
         <td>{{ user.articleCount }}</td>
@@ -18,4 +18,9 @@
       </tr>
     </tbody>
   </table>
+  <ng-template #noUsers>
+    <tr>
+      <td colspan="4" class="no-users">No users found.</td>
+    </tr>
+  </ng-template>
 </div>
