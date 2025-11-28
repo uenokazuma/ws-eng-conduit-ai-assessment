@@ -1,0 +1,33 @@
+.roster-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.roster-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.roster-table th, .roster-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.roster-table th {
+  background-color: #f4f4f4;
+}
+
+.roster-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.roster-table a {
+  color: #5cb85c;
+  text-decoration: none;
+}
+
+.roster-table a:hover {
+  text-decoration: underline;
+}
