@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken';
 import { EntityManager, wrap } from '@mikro-orm/core';
 import { SECRET } from '../config';
 import { CreateUserDto, LoginUserDto, UpdateUserDto } from './dto';
+import { Article } from '../article/article.entity';
 import { User } from './user.entity';
 import { IUserRO } from './user.interface';
 import { UserRepository } from './user.repository';
@@ -21,9 +22,10 @@ export class UserService {
     const users = await this.userRepository.findAll();
     const userStats = await Promise.all(
       users.map(async (user) => {
-        const articleCount = await this.em.count('Article', { author: user.id });
-        const favoritesCount = await this.em.count('Article', { author: user.id, favorited: true });
-        const firstArticle = await this.em.findOne('Article', { author: user.id }, { orderBy: { createdAt: 'ASC' } });
+        const articles = await this.em.find(Article, { author: user.id }, { populate: ['favoritedBy'] });
+        const articleCount = articles.length;
+        const favoritesCount = articles.reduce((sum, article) => sum + article.favoritedBy.length, 0);
+        const firstArticle = await this.em.findOne(Article, { author: user.id }, { orderBy: { createdAt: 'ASC' } });
         const firstArticleDate = firstArticle ? firstArticle.createdAt : null;
         return { 
           username: user.username,
