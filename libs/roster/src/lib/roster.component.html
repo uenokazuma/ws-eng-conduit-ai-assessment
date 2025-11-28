@@ -5,7 +5,7 @@
       <tr>
         <th>Username</th>
         <th>Article Count</th>
-        <th>Favorites Received</th>
+        <th>Favorites Count</th>
         <th>First Article Date</th>
       </tr>
     </thead>
@@ -13,7 +13,7 @@
       <tr *ngFor="let user of users">
         <td><a [routerLink]="['/profile', user.username]">{{ user.username }}</a></td>
         <td>{{ user.articleCount }}</td>
-        <td>{{ user.favoritesReceived }}</td>
+        <td>{{ user.favoritesCount }}</td>
         <td>{{ user.firstArticleDate }}</td>
       </tr>
     </tbody>

@@ -17,15 +17,24 @@ export class UserService {
     return this.userRepository.findAll();
   }
 
-  async findAllWithArticleCount(): Promise<any[]> {
+  async findAllWithArticleAndFavoriteStats(): Promise<any[]> {
     const users = await this.userRepository.findAll();
-    const userWithArticleCounts = await Promise.all(
+    const userStats = await Promise.all(
       users.map(async (user) => {
         const articleCount = await this.em.count('Article', { author: user.id });
-        return { ...user, articleCount };
+        const favoritesCount = await this.em.count('Article', { author: user.id, favorited: true });
+        const firstArticle = await this.em.findOne('Article', { author: user.id }, { orderBy: { createdAt: 'ASC' } });
+        const firstArticleDate = firstArticle ? firstArticle.createdAt : null;
+        return { 
+          username: user.username,
+          email: user.email,
+          articleCount,
+          favoritesCount,
+          firstArticleDate
+        };
       })
     );
-    return userWithArticleCounts;
+    return userStats;
   }
 
   async findOne(loginUserDto: LoginUserDto): Promise<User> {

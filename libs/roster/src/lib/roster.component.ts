@@ -32,7 +32,7 @@ export class RosterComponent implements OnInit {
     this.http.get<User[]>('/api/users').subscribe((data) => {
       this.users = data.map(user => ({
         ...user,
-        firstArticleDate: user.firstArticleDate || '-'
+        firstArticleDate: user.firstArticleDate ? new Date(user.firstArticleDate).toLocaleDateString() : '-'
       }));
     });
   }

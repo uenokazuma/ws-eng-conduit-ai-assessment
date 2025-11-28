@@ -19,8 +19,8 @@ export class UserController {
   }
 
   @Get('users')
-  async findAllUsersWithArticleCount(): Promise<any[]> {
-    return this.userService.findAllWithArticleCount();
+  async findAllUsersWithStats(): Promise<any[]> {
+    return this.userService.findAllWithArticleAndFavoriteStats();
   }
 
   @Put('user')
