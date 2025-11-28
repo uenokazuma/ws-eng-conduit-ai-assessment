@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
@@ -22,7 +22,7 @@ interface User {
 export class RosterComponent implements OnInit {
   users: User[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.loadUsers();
@@ -34,6 +34,7 @@ export class RosterComponent implements OnInit {
         ...user,
         firstArticleDate: user.firstArticleDate ? new Date(user.firstArticleDate).toLocaleDateString() : '-'
       }));
+      this.cdr.markForCheck();
     });
   }
 }
